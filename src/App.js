@@ -24,6 +24,15 @@ function App() {
       return;
     }
 
+    // check file's size to apply size limit
+    // frontend checking
+    const fileSize = file.size;
+    const oneMB = 1048576;
+    if (fileSize > oneMB) {
+      alert(`Please, update files smaller than 1MB. \nYour current file is about ${Math.round(fileSize / oneMB)}MB volume.`);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("image", file);
     formData.append("description", description);
@@ -85,7 +94,7 @@ function App() {
       return;
 
     const rmItem = await axios.delete(`/api/images/rm/${id}`);
-console.log("rmItem ", rmItem)
+// console.log("rmItem ", rmItem)
     if (rmItem.data.error) {
       setMessageClass("error");
       setMessage(rmItem.data.error);
